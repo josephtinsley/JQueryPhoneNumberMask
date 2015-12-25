@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--
+JQuery Telephone Number Mask
+US/CAN Phone number i.e. 404-941-5907
+Joseph Tinsley 2015-12-24
+-->
+<html>
+    <head>
+        <title>Telephone Number Mask</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <style>
+            body {
+                padding-top: 50px;
+            }
+            .container {
+                padding: 40px 15px;
+                text-align: center;
+            }
+            input{
+                width:250px;
+                height:35px;
+                border:2px solid #ddd;
+                border-radius: 3px;
+                font-size: 16px;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="container">
+            <input type="text" id="phone-number" placeholder="(999) 999-9999" />
+        </div>
+        
+       
+        <!-- 
+        === Script Stuff Here === 
+        -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script>
+            $(function()
+            {
+                
+                $("#phone-number").click(function()
+                {
+                    var phoneNumber = $(this).val();
+
+                    if(phoneNumber.length === 0)
+                    {
+                     $("#phone-number").val("("+ $(this).val());     
+                    }
+                });
+
+                $("#phone-number").keyup(function(evt)
+                {
+                    var phoneNumber = $(this).val();
+                    var count = phoneNumber.split("(").length;
+                    
+                    //ENSURE AFTER BACKSPACE THAT ONLY 1 BEGINNING PARENTHESE IS ADDED
+                    if(count > 2)
+                    {
+                      $("#phone-number").val("(");  
+                    }
+
+                    //IF KEYCODE DOES NOT EQUAL 8 DONT RUN THE CODE
+                    if(evt.keyCode !== 8)
+                    {
+                        //PREVENTS USER FROM GOING OVER THE CHARCTER LIMIT
+                        if(phoneNumber.length > 14 ){
+                           $("#phone-number").val(phoneNumber.slice(0,-1));
+                        }
+                        if(phoneNumber.length === 1 ){
+                         $("#phone-number").val("("+ $(this).val());  
+                        }
+                        if(phoneNumber.length === 4 ){
+                         $("#phone-number").val($(this).val()+") ");  
+                        }
+                        if(phoneNumber.length === 9 ){
+                         $("#phone-number").val($(this).val()+"-");  
+                        }
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
